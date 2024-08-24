@@ -9,35 +9,35 @@
 <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
 
 <script>
-    const contract_address = "0xdff8042301d8f19543ce48ab39fb74c2396681a6";
+    const contract_address = "0xc03ABe72df7157051772AeE921ef06E75d09f070";
     const contract_abi = [
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "store_amt",
-                    "type": "uint256"
-                }
-            ],
-            "name": "store_m",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "view_m",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        }
-    ];
+	{
+		"inputs": [],
+		"name": "retrive_m",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "transfer_amt",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer_m",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
 
     const web3 = new Web3(Web3.givenProvider);
     const contract = new web3.eth.Contract(contract_abi, contract_address);
