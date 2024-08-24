@@ -1,16 +1,114 @@
-<h2>DAPP</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAPP - Deposit & View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-<p>Please enter the amount to deposit : </p> 
-<input type = "number" id="amount_deposited">
-<button class="btn" onclick="save_money()">Enter</button>
-<p><button class="btn" onclick="view_money()">View Money</button></p>
-<p id="display_amount"></p>
+        .container {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 90%;
+        }
 
-<script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+        h2 {
+            text-align: center;
+            color: #333;
+        }
 
-<script>
-    const contract_address = "0xc03ABe72df7157051772AeE921ef06E75d09f070";
-    const contract_abi = [
+        p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+
+        input[type="number"] {
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        #display_amount {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 20px;
+            }
+
+            input[type="number"], .btn {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            #display_amount {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>DAPP - Deposit & View</h2>
+        <p>Please enter the amount to deposit:</p> 
+        <input type="number" id="amount_deposited">
+        <button class="btn" onclick="save_money()">Enter</button>
+        <p><button class="btn" onclick="view_money()">View Money</button></p>
+        <p id="display_amount"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+
+    <script>
+        const contract_address = "0xc03ABe72df7157051772AeE921ef06E75d09f070";
+        const contract_abi = [
 	{
 		"inputs": [],
 		"name": "retrive_m",
@@ -39,20 +137,23 @@
 	}
 ]
 
-    const web3 = new Web3(Web3.givenProvider);
-    const contract = new web3.eth.Contract(contract_abi, contract_address);
+        const web3 = new Web3(Web3.givenProvider);
+        const contract = new web3.eth.Contract(contract_abi, contract_address);
 
-    async function save_money(){
-        const accounts = await web3.eth.requestAccounts();
-        console.log(accounts[0]);
-        const amount_d = document.getElementById("amount_deposited").value;
-        console.log(amount_d);
-        await contract.methods.store_m(amount_d).send({from : accounts[0]});
-    }
+        async function save_money(){
+            const accounts = await web3.eth.requestAccounts();
+            console.log(accounts[0]);
+            const amount_d = document.getElementById("amount_deposited").value;
+            console.log(amount_d);
+            await contract.methods.store_m(amount_d).send({from : accounts[0]});
+        }
 
-    async function view_money(){
-        const stored_amount = await contract.methods.view_m().call();
-        console.log(stored_amount);
-        document.getElementById("display_amount").innerText=stored_amount;
-    }
-</script>
+        async function view_money(){
+            const stored_amount = await contract.methods.view_m().call();
+            console.log(stored_amount);
+            document.getElementById("display_amount").innerText = stored_amount;
+        }
+    </script>
+
+</body>
+</html>
