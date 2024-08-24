@@ -45,11 +45,14 @@
     async function save_money(){
         const accounts = await web3.eth.requestAccounts();
         console.log(accounts[0]);
+        const amount_d = document.getElementById("amount_deposited").value;
+        console.log(amount_d);
+        await contract.methods.store_m(amount_d).send({from : accounts[0]});
     }
 
     async function view_money(){
-        
+        const stored_amount = await contract.methods.view_m().call();
+        console.log(stored_amount);
+        document.getElementById("display_amount").innerText=stored_amount;
     }
-
-
 </script>
